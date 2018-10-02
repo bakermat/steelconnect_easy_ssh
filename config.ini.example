@@ -1,0 +1,6 @@
+; config.ini
+# SteelConnect Manager details, credentials are case-sensitive
+[SCM]
+REALM = realm.riverbed.cc
+USERNAME = username
+PASSWORD = password
