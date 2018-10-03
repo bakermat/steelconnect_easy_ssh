@@ -114,7 +114,7 @@ def get_node_details(sc, sites, nodes, orgs, uplinks_status, nodes_status):
                                 (node_status['ha_state'] == 'backup')):
                             ha_state_msg = " [HA " + node_status['ha_state'].capitalize() + "]"
                             site_name = site_name + ha_state_msg
-                if serial != 'shadow':
+                if serial != 'shadow' and "Xirrus" not in model:
                     Node = namedtuple('Node', ['site_name', 'site_id', 'node_id',
                                                'model', 'serial', 'org', 'uplinks'])
                     node_details.extend([Node(site_name, site_id, node_id,
