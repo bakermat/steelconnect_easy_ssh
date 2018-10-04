@@ -192,6 +192,23 @@ def start_ssh_direct(sc, ip_addr):
         main(sc)
 
 
+def get_input(prompt, length):
+    while True:
+        try:
+            value = int(input(prompt))
+        except ValueError:
+            sys.exit(0)
+        if value > length:
+            print("Selection invalid, please try again.")
+            continue
+        if value < 1:
+            print("I don't like your negativity.")
+            continue
+        else:
+            break
+    return value
+
+
 @handle_error
 def main(sc=None):
     """ Main function """
@@ -209,12 +226,12 @@ def main(sc=None):
     node_details = get_node_details(sc, sites, nodes, org_details, uplinks_status, nodes_status)
     active_tunnels = get_items(sc, 'sshtunnel')
     nodes_list = list_nodes(node_details, active_tunnels)
-    try:
-        selected_site = int(input("Type number to select site, or anything else to quit: "))
+    while True:
+        selected_site = get_input("Type number to select site, or anything else to quit: ", len(nodes_list))
         uplink_list = select_node_detail(nodes_list[selected_site])
-        selected_ssh_option = int(input("Selection: "))
-    except ValueError:
-        sys.exit(0)
+        # adding len+1 as the first index is the manually defined SCM SSH tunnel
+        selected_ssh_option = get_input("Selection: ", len(uplink_list)+1)
+        break
     if selected_ssh_option == 1:
         start_tunnel(sc, nodes_list[selected_site])
     else:
